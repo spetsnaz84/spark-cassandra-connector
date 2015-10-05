@@ -73,7 +73,7 @@ object WriteConf {
     WriteTaskMetricsProperty
   )
 
-  val DefaultConsistencyLevel = ConsistencyLevel.LOCAL_ONE
+  val DefaultConsistencyLevel = ConsistencyLevel.LOCAL_QUORUM
   val DefaultBatchSizeInBytes = 1024
   val DefaultParallelismLevel = 5
   val DefaultBatchGroupingBufferSize = 1000
