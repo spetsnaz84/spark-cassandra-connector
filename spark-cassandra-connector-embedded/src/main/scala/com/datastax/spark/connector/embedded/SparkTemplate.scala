@@ -37,12 +37,25 @@ object SparkTemplate {
 
   private var _sc: SparkContext = _
 
+
+
+  val SparkAddedKeys = Seq(
+  "spark.driver.host",
+  "spark.localProperties.clone",
+  "spark.driver.port",
+  "spark.fileserver.uri",
+  "spark.externalBlockStore.folderName",
+  "spark.executor.id",
+  "spark.app.id"
+  )
+
   /** Ensures that the currently running [[org.apache.spark.SparkContext SparkContext]] uses the provided
-    * configuration. If the configurations are different or force is `true` Spark context is stopped and
-    * started again with the given configuration. */
+  * configuration. Running Configurations are modified so we need to remove the added parameters from
+  * the spark conf*/
   def useSparkConf(conf: SparkConf = SparkTemplate.defaultConf, force: Boolean = false): SparkContext = {
-    if (_sc.getConf.getAll.toMap != conf.getAll.toMap || force)
+    if (_sc.getConf.getAll.toMap -- SparkAddedKeys != conf.getAll.toMap || force) {
       resetSparkContext(conf)
+    }
     _sc
   }
 
